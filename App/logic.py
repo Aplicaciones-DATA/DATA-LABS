@@ -9,7 +9,7 @@ def selection_sort(my_list, sort_criteria):
         min_index = i
         for j in range(i + 1, fin):
             #Extraermos los elementos a comparar
-            elemento_actual = get_element(my_list, i)
+            elemento_actual = get_element(my_list, j)
             elemento_minimo = get_element(my_list, min_index)
             #Comparamos los elemntos con sort_criteria
             if sort_criteria(elemento_actual, elemento_minimo):
