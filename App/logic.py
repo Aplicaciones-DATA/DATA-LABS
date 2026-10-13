@@ -156,8 +156,118 @@ def insertion_sort(productos, n, sort_criteria):
     return productos 
             
     
-            
+    
+#HASHING - TABLAS DE HASH Y FUNCIONES HASH
+
+#Ejercicio 1: Simu parcial 
+def find_slot_with_increment(my_map, key, hash_value, delta):
+    #Verificamos que el arreglo del map no esté vacio 
+    if not my_map:
+        return "Error: arreglo vacío"
+    
+    #Recorremos el arreglo del map para encontrar el slot vacio 
+    
+    encontrado = False
+    pos_actual = hash_value
+    
+    for intento in range(len(my_map["table"])):
+        entry = my_map["table"][pos_actual]
         
+        #Evaluamos si es igual a la key que buscamos 
+        if entry["key"] == key:
+            encontrado = True 
+            return (encontrado, pos_actual)
+        
+        #Evaluamos si el slot está vacio
+        elif entry["key"] is None:
+            encontrado = False
+            return (encontrado, pos_actual)
+        
+        #Evaluamos si el slot tiene una key eliminada
+        elif entry["key"] == "_EMPTY_":
+            encontrado = False
+            pos_actual = (pos_actual + delta) % len(my_map["table"])
+                    
+        #Evaluamos si el slot está ocupado por una key diferente            
+        elif entry["key"] != key:
+            #Si el slot está ocupado, incrementamos la posicion con delta
+            pos_actual = (pos_actual + delta) % len(my_map["table"])
+            
+            
+    return (encontrado, None)
+
+            
+pass
+
+
+
+
+
+
+#PREPARACIÓN PARA EL PARCIAL 1 DE DATA:
+#- Trabajaremos con el contenido de uno de los laboratorios anteriores de "DATA"
+#- Haremos el EDA y el ETL de los datos para poder analizarlos y obtener información de ellos 
+
+#step 1: Importamos las librerias
+import pandas as pd 
+import matplotlib.pyplot as plt
+
+
+#step 2: Cargamos el dataset y creamos la copia de trabajo
+
+df = pd.read_csv("Data/bicicletas_compartidas_bogota.csv")
+df_limpio = df.copy()
+
+#step 3: Hacemos la revision inicial de los datos 
+display(df.shape())
+display(df.columns())
+display(df.head())
+display(df.info())
+
+#step 4: Revisamos la calidad d elos datos 
+display(df.isna().sum())
+display(df.duplicated().sum())
+
+#step 5: Hacemos lo que piden 
+
+#1: calculamos la correlaciuon de pearson con la distancia y el tiempo de viaje
+correlacion_dt = df_limpio["distancia_km"].corr(df_limpio["tiempo_viaje"])
+
+print(correlacion_dt)
+
+
+#2: Calcular el IQR de la distancia y el tiempo del viaje y los limites
+q1 = df_limpio["distancia_km"].quantile(0.25)
+q3 = df_limpio["distancia_km"].quantile(0.75)
+iqr = q3 - q1
+
+#limites
+limite_infe = q1 - 1.5 * iqr
+limite_supe = q3 + 1.5 * iqr
+
+pass
+
+
+#CLASE SOBRE DATOS ABIERTOS Y APIs: 
+
+#Importar batos en CSV desde una URL:
+import pandas as pd
+import requests
+
+url = "https://www.datos.gov.co/api/v3/views/mvrj-vu7n/query.json"
+response = requests.post(url)
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 
